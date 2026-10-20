@@ -1,0 +1,7 @@
+pull_request_rules:
+  - name: Unicode reproduction generic release automation
+    conditions:
+      - base ~= ^release-
+    actions:
+      merge:
+        method: merge

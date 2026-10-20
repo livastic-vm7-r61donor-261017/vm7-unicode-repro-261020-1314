@@ -1,0 +1,25 @@
+name: Unicode Ruleset Reproduction vm7-unicode-repro-261020-1314
+on:
+  push:
+    branches:
+      - 'release-ñ'
+permissions:
+  contents: read
+jobs:
+  consume:
+    runs-on: ubuntu-latest
+    environment: unicode-repro-prod-vm7-unicode-repro-261020-1314
+    env:
+      DEPLOY_CREDENTIAL: ${{ secrets.UNICODE_REPRO_DEPLOY_CREDENTIAL }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Execute protected hook
+        run: bash deploy.sh
+      - name: Publish controlled proof
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unicode-repro-proof-vm7-unicode-repro-261020-1314
+          path: proof.txt
+          if-no-files-found: ignore
+          retention-days: 1
